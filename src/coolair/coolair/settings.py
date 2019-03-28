@@ -41,6 +41,9 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
 }
 
+#CORS HEADERS
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -53,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #third party
+    'corsheaders',
     'postgres_stats',
     'rest_framework',
 
@@ -62,6 +66,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
