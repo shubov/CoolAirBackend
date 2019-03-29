@@ -12,31 +12,9 @@ class AirportNotFound(APIException):
     status_code = 404
     default_detail = 'Airport Code is wrong. There is no airport mathcing to this code.'
 
-class ServiceUnavailable(APIException):
-    status_code = 503
-    default_detail = 'Service temporarily unavailable, try again later.'
-    default_code = 'service_unavailable'
-
-class ServiceUnavailable(APIException):
-    status_code = 503
-    default_detail = 'Service temporarily unavailable, try again later.'
-    default_code = 'service_unavailable'
-
-class ServiceUnavailable(APIException):
-    status_code = 503
-    default_detail = 'Service temporarily unavailable, try again later.'
-    default_code = 'service_unavailable'
-
-class ServiceUnavailable(APIException):
-    status_code = 503
-    default_detail = 'Service temporarily unavailable, try again later.'
-    default_code = 'service_unavailable'
-
-class ServiceUnavailable(APIException):
-    status_code = 503
-    default_detail = 'Service temporarily unavailable, try again later.'
-    default_code = 'service_unavailable'
-
+class StatisticsNotFound(APIException):
+    status_code = 404
+    default_detail = 'There is no statistics corresponding to such parameters. Check the query.'
 
 
 

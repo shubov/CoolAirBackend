@@ -19,6 +19,7 @@ class DataAirportSerializer(serializers.ModelSerializer):
 	
 	airport_url = serializers.SerializerMethodField(read_only=True)
 	airports_list_url = serializers.SerializerMethodField(read_only=True)
+	statistics_list_url = serializers.SerializerMethodField(read_only=True)
 
 	class Meta:
 		model = Data
@@ -26,8 +27,12 @@ class DataAirportSerializer(serializers.ModelSerializer):
 			'pk',
 			'airport_url',
 			'airports_list_url',
+			'statistics_list_url',
+			'carrier_code',
+			'carrier_name',
 			'airport_code',
-			'airport_name')
+			'airport_name',
+			'time_label')
 
 	def get_airport_url(self, obj):
 		return obj.get_airport_url(self.context.get("request"))
@@ -35,11 +40,15 @@ class DataAirportSerializer(serializers.ModelSerializer):
 	def get_airports_list_url(self, obj):
 		return api_reverse('airport_list', request=self.context.get("request"))
 
+	def get_statistics_list_url(self, obj):
+		return api_reverse('statistics_list', request=self.context.get("request"))
+
 ## 2nd endpoint
 class DataCarrierSerializer(serializers.ModelSerializer):
 
 	carrier_url = serializers.SerializerMethodField(read_only=True)
 	carriers_list_url = serializers.SerializerMethodField(read_only=True)
+	statistics_list_url = serializers.SerializerMethodField(read_only=True)
 
 	class Meta:
 		model = Data
@@ -47,8 +56,12 @@ class DataCarrierSerializer(serializers.ModelSerializer):
 			'pk',
 			'carrier_url',
 			'carriers_list_url',
+			'statistics_list_url',
 			'carrier_code',
-			'carrier_name')
+			'carrier_name',
+			'airport_code',
+			'airport_name',
+			'time_label')
 
 	def get_carrier_url(self, obj):
 		return obj.get_carrier_url(self.context.get("request"))
@@ -56,26 +69,35 @@ class DataCarrierSerializer(serializers.ModelSerializer):
 	def get_carriers_list_url(self, obj):
 		return api_reverse('carriers_list', request=self.context.get("request"))
 
+	def get_statistics_list_url(self, obj):
+		return api_reverse('statistics_list', request=self.context.get("request"))
+
 ## 3d endpoint
 class DataAirportCarrierSerializer(serializers.ModelSerializer):
 	carrier_url = serializers.SerializerMethodField(read_only=True)
 	carriers_list_url = serializers.SerializerMethodField(read_only=True)
+	statistics_list_url = serializers.SerializerMethodField(read_only=True)
 	class Meta:
 		model = Data
 		fields = (
 			'pk',
 			'carrier_url',
 			'carriers_list_url',
+			'statistics_list_url',
 			'carrier_code',
 			'carrier_name',
 			'airport_code',
-			'airport_name')
+			'airport_name', 
+			'time_label')
 
 	def get_carrier_url(self, obj):
-		return api_reverse('carrier_specific', kwargs = {'pk': 1})
+		return obj.get_carrier_url(self.context.get("request"))
 
 	def get_carriers_list_url(self, obj):
-		return reverse('carriers_list')
+		return api_reverse('carriers_list', request=self.context.get("request"))
+
+	def get_statistics_list_url(self, obj):
+		return api_reverse('statistics_list', request=self.context.get("request"))
 
 ## 4th endpoint
 class DataStatisticsSerializer(CustomSerializer):
@@ -91,10 +113,10 @@ class DataStatisticsSerializer(CustomSerializer):
 			'statistics_list_url']
 
 	def get_statistics_url(self, obj):
-		return api_reverse('statistics_specific', kwargs = {'pk': 1})
+		return obj.get_statistics_url(self.context.get("request"))
 
 	def get_statistics_list_url(self, obj):
-		return reverse('statistics_list')
+		return api_reverse('statistics_list', request=self.context.get("request"))
 
 ## 5th endpoint
 class DataNumbersSerializer(serializers.ModelSerializer):
@@ -111,7 +133,7 @@ class DataNumbersSerializer(serializers.ModelSerializer):
 			'statistics_flights_ontime')
 
 	def get_numbers_url(self, obj):
-		return reverse('numbers_list')
+		return api_reverse('numbers_list', request=self.context.get("request"))
 
 ## 6th endpoint
 class DataMinutesSerializer(serializers.ModelSerializer):
@@ -131,7 +153,7 @@ class DataMinutesSerializer(serializers.ModelSerializer):
 			'statistics_minutesdelayed_weather')
 
 	def get_minutes_url(self, obj):
-		return reverse('minutes_list')
+		return api_reverse('minutes_list', request=self.context.get("request"))
 
 ## 7th endpoint
 class DataDescrStatsSerializer(serializers.ModelSerializer):
@@ -159,4 +181,4 @@ class DataDescrStatsSerializer(serializers.ModelSerializer):
 			'statistics_minutesdelayed_lateaircraft')
 
 	def get_delays_url(self, obj):
-		return reverse('delays_list')
+		return reverse('delays_list', request=self.context.get("request"))

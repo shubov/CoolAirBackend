@@ -76,17 +76,32 @@ class ListofStatisticsView(generics.ListCreateAPIView):			#4th endpoint
 		airport = req.GET.get('airport')
 		carrier = req.GET.get('carrier')
 		time 	= req.GET.get('time')
+		data_to_return = Data.objects.all()
+		if data_to_return.count()==0:
+			raise StatisticsNotFound()
+
 		if airport and carrier and time:
-			return Data.objects.all().filter( 
+			q = data_to_return.filter( 
 				Q(airport_code	= airport)& 
 				Q(carrier_code	= carrier)& 
 				Q(time_label	= time))
+
+			if q.count()==0:
+				raise StatisticsNotFound()
+
+			return q
+
 		elif airport and carrier:
-			return Data.objects.all().filter(
+			q = data_to_return.filter(
 				airport_code = airport,
 				carrier_code = carrier)
+
+			if q.count()==0:
+				raise StatisticsNotFound()
+
+			return q
 		else:
-			return Data.objects.all()
+			return data_to_return
 
 #...statistics/<pk>
 class StatisticsView(generics.RetrieveUpdateDestroyAPIView):	#4th endpoint
