@@ -17,13 +17,24 @@ urlpatterns = [
     url(r'^api/(?P<version>(v1))/carriers/$',                          CarriersView.as_view(),          name='carriers_list'),
     url(r'^api/(?P<version>(v1))/carrier/(?P<carrier_code>\w+)/$',     CarrierView.as_view(),           name='carrier_specific'),
 
-    url(r'^statistics/$',                                               ListofStatisticsView.as_view(),  name='statistics_list'),
-    url(r'^statistics/(?P<pk>\d+)/$',                                   StatisticsView.as_view(),        name='statistics_specific'), 
+    url(r'^api/(?P<version>(v1))/statistics/$',                                               
+        ListofStatisticsView.as_view(),  
+        name='statistics_list'),
 
-    url(r'^statistics/numbers/$',                                       NumbersView.as_view(),           name='numbers_list'),
+    url(r'^api/(?P<version>(v1))/statistics/(?P<pk>\d+)/$',                                   
+        StatisticsView.as_view(),        
+        name='statistics_specific'), 
 
-    url(r'^statistics/minutes/$',                                       MinsOfDelayView.as_view(),       name='minutes_list'),
+    url(r'^api/(?P<version>(v1))/statistics/numbers/$',                                       
+        NumbersView.as_view(),           
+        name='numbers_list'),
 
-    url(r'^statistics/descriptive/$',                                   DescrStatsView.as_view(),        name='delays_list')
+    url(r'^api/(?P<version>(v1))/statistics/minutes/$',                                       
+        MinsOfDelayView.as_view(),       
+        name='minutes_list'),
+
+    url(r'^api/(?P<version>(v1))/statistics/descriptive/$',                                   
+        DescrStatsView.as_view(),        
+        name='delays_list')
 
     ]
